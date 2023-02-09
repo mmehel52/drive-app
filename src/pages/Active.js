@@ -1,5 +1,5 @@
-import axios from "axios";
 import React, { useState } from "react";
+import axios from "axios";
 import { useGlobalContext } from "../context/DriverContext";
 const Active = () => {
   const { driver } = useGlobalContext();
@@ -27,7 +27,7 @@ const Active = () => {
   };
   return (
     <div>
-      <h1>Welcome {driver.name}</h1>
+      <h1>Welcome {driver?.name}</h1>
 
       {!active && (
         <>

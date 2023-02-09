@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { useGlobalContext } from "../context/DriverContext";
 
 const ClientLogin = () => {
+  const { clientLogin, client } = useGlobalContext();
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     email: "",
@@ -14,19 +15,11 @@ const ClientLogin = () => {
       [e.target.name]: e.target.value,
     }));
   };
-
-  const Login = () => {
-    axios
-      .post("http://localhost:5000/api/authclients/login", {
-        email: inputs.email,
-        password: inputs.password,
-      })
-      .then((res) => {
-        console.log(res.data);
-        navigate("/main");
-        setInputs("");
-      })
-      .catch((err) => console.log(err));
+  const Handle = () => {
+    clientLogin(inputs, setInputs);
+    navigate("/main");
+    setInputs("");
+    console.log(client);
   };
 
   return (
@@ -48,7 +41,7 @@ const ClientLogin = () => {
         placeholder="Password"
       />
       <br />
-      <button onClick={() => Login()}>Login</button>
+      <button onClick={() => Handle()}>Login</button>
       <br />
       <Link to="/cregister"> Don't you have account?</Link>
     </div>

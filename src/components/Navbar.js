@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useGlobalContext } from "../context/DriverContext";
 
 const Navbar = () => {
-  const { driver } = useGlobalContext();
+  const { driver, client, setDriver, setClient } = useGlobalContext();
   const [value, setValue] = useState();
   return (
     <div>
@@ -18,13 +18,35 @@ const Navbar = () => {
               value={value}
               textColor="inherit"
             >
-              <Tab to="/client" label="Client" LinkComponent={Link} />
-              {!driver && (
-                <Tab to="/driver" label="Driver" LinkComponent={Link} />
+              {driver && (
+                <>
+                  <Tab label={driver?.name} />
+                  <Tab
+                    to="/"
+                    onClick={() => setDriver("")}
+                    label="Logout"
+                    LinkComponent={Link}
+                  />
+                </>
               )}
-              {driver && <Tab label={driver?.name} />}
+              {client && (
+                <>
+                  <Tab label={client?.name} />
+                  <Tab
+                    to="/"
+                    onClick={() => setClient("")}
+                    label="Logout"
+                    LinkComponent={Link}
+                  />
+                </>
+              )}
+              {!client && !driver && (
+                <>
+                  <Tab to="/client" label="Client" LinkComponent={Link} />
 
-              {driver && <Tab to="/" label="Logout" LinkComponent={Link} />}
+                  <Tab to="/driver" label="Driver" LinkComponent={Link} />
+                </>
+              )}
             </Tabs>
           </Box>
         </Toolbar>
